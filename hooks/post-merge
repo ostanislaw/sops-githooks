@@ -14,7 +14,7 @@ for originFile in $(cat .secret_files); do
         sops -d --output $originFile $encryptedFilename
     else
         # If the origin file already exist on local, check if encrypted file changed in the remote updates
-        fileChanged=$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD -- $encryptedFilename)
+        fileChanged=$(git diff-tree -r --name-only --no-commit-id HEAD@{1} HEAD -- $encryptedFilename)
         if [[ ! -z $fileChanged ]]; then
             # Print the file diff for user review
             echo -e "\n"
